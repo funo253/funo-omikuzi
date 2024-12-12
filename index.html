@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>おみくじ</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>おみくじ</h1>
+    <button id="drawButton">おみくじを引く</button>
+    <div id="purification" class="hidden">お祓い中...</div>
+    <div id="result" class="hidden">
+      <p id="fortune"></p>
+      <p id="message"></p>
+      <button id="retryButton" class="hidden">もう一度引く</button>
+    </div>
+  </div>
+
+  <script>
+    const fortunes = [
+      { result: "大吉", message: "今日は最高の日！" },
+      { result: "吉", message: "良いことがありそう！" },
+      { result: "中吉", message: "ちょっとラッキー！" },
+      { result: "小吉", message: "穏やかな一日を！" },
+      { result: "末吉", message: "ちょっと頑張ればいいことが！" },
+      { result: "凶", message: "今日は慎重に！" }
+    ];
+
+    const drawButton = document.getElementById("drawButton");
+    const retryButton = document.getElementById("retryButton");
+    const purificationDiv = document.getElementById("purification");
+    const resultDiv = document.getElementById("result");
+
+    // おみくじを引く処理
+    function drawFortune() {
+      // ボタンの表示・非表示を切り替え
+      drawButton.classList.add("hidden");
+      retryButton.classList.add("hidden");
+      resultDiv.classList.add("hidden");
+      purificationDiv.classList.remove("hidden");
+
+      // お祓いタイム (2秒)
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * fortunes.length);
+        const fortune = fortunes[randomIndex];
+        document.getElementById("fortune").textContent = fortune.result;
+        document.getElementById("message").textContent = fortune.message;
+        purificationDiv.classList.add("hidden");
+        resultDiv.classList.remove("hidden");
+        retryButton.classList.remove("hidden");
+      }, 2000);
+    }
+
+    drawButton.addEventListener("click", drawFortune);
+    retryButton.addEventListener("click", drawFortune);
+  </script>
+</body>
+</html>
